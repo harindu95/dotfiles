@@ -23,7 +23,7 @@ Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
 Plugin 'majutsushi/tagbar'
 Plugin 'ctrlpvim/ctrlp.vim' "CtrlP fuzzy find
-Plugin 'mattn/emmet-vim'       "Emmet 
+Plugin 'mattn/emmet-vim'       "Emmet
 Plugin 'Shutnik/jshint2.vim'   "JSHint
 Plugin 'skammer/vim-css-color' "CSS-Color
 Plugin 'valloric/youcompleteme'
@@ -119,7 +119,7 @@ set background=dark
 let g:solarized_termcolors=256
 
 " Set the colorscheme
-colorscheme solarized
+colorscheme darkZ
 
 
 " ----- lightline settings -----
@@ -127,13 +127,13 @@ colorscheme solarized
 set laststatus=2
 
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'component': {
-      \   'readonly': '%{&readonly?"":""}',
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
-      \ }
+            \ 'colorscheme': 'wombat',
+            \ 'component': {
+            \   'readonly': '%{&readonly?"":""}',
+            \ },
+            \ 'separator': { 'left': '', 'right': '' },
+            \ 'subseparator': { 'left': '', 'right': '' }
+            \ }
 
 
 " ----- jistr/vim-nerdtree-tabs -----
