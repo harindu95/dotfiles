@@ -196,7 +196,7 @@ set clipboard=unnamed
 " CTRL-X and SHIFT-Del are Cut
 " vnoremap <C-X> "+x
 " CTRL-C and CTRL-Insert are Copy
-vnoremap <C-C> "+y
+" vnoremap <C-C> "+y
 " CTRL-V and SHIFT-Insert are Paste
 " map <C-V>     "+gP
 " cmap <C-V>        <C-R>+
