@@ -223,6 +223,7 @@ set expandtab
 inoremap <c-space> <c-n>
 inoremap <Nul> <c-n>
 
+noremap ; :
 
 " ----- Plugin-Specific Settings --------------------------------------
 

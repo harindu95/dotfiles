@@ -1,7 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
-xmodmap .xmodmap
 export TERM=xterm-256color
 alias nvimrc='nvim ~/.config/nvim/init.vim'
 alias vim='nvim'
@@ -124,4 +123,7 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 fi
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:/usr/sbin:$PATH
+
+setxkbmap -option "caps:swapescape"
+
