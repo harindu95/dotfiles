@@ -87,6 +87,7 @@ set incsearch
 set hlsearch
 set mouse=a
 syntax on
+source $VIMRUNTIME/mswin.vim
 
 " map cut & paste to what they bloody should be
 vnoremap <C-c> "y
@@ -119,7 +120,7 @@ set background=dark
 let g:solarized_termcolors=256
 
 " Set the colorscheme
-colorscheme darkZ
+colorscheme solarized
 
 
 " ----- lightline settings -----
