@@ -11,7 +11,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'KevinGoodsell/vim-csexact'
 Plug 'flazz/vim-colorschemes'
 Plug 'trusktr/seti.vim'
-" Plug 'chriskempson/base16-vim'
+Plug 'chriskempson/base16-vim'
 " Plug 'KabbAmine/yowish.vim'
 "
 " ----- Vim as a programmer's text editor -----------------------------
@@ -43,6 +43,10 @@ Plug 'easymotion/vim-easymotion'
 " Plug 'ervandew/supertab'
 " Plug 'neitanod/vim-clevertab'
 " Plug 'jceb/emmet.snippets'
+Plug 'lyuts/vim-rtags'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
+Plug 'mileszs/ack.vim'
+Plug 'tpope/vim-repeat'
 
 " ----- Working with Git ----------------------------------------------
 Plug 'airblade/vim-gitgutter'
@@ -92,9 +96,11 @@ set backspace=indent,eol,start
 set ruler
 set relativenumber
 set number
-set tabstop=4
-set expandtab
-set shiftwidth=4
+
+"open vsplit on right
+set splitright
+
+
 " set tw=79 "width of document  (used by gd)
 set nowrap
 set colorcolumn=80
@@ -105,9 +111,36 @@ set showcmd
 set incsearch
 set hlsearch
 set mouse=a
+set showmatch
+set ignorecase
+set smartcase
+
 syntax on
 source $VIMRUNTIME/mswin.vim
+set history=1000
+set undolevels=1000
+set title
+set visualbell
+set noerrorbells
+"Disable backup and swap files
+set nobackup
+set nowritebackup
+set noswapfile
+" sane text files
+set fileformat=unix
+set encoding=utf-8
 
+" sane editing
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set smarttab
+set autoindent
+set copyindent
+behave mswin
+
+set clipboard=unnamed
 "Rebind <leade> key
 let mapleader= ','
 
@@ -162,10 +195,6 @@ autocmd BufWritePre * :%s/\s\+$//e
 vmap Q gq
 nmap Q gqap
 
-"Disable backup and swap files
-set nobackup
-set nowritebackup
-set noswapfile
 
 "Add autoformat shortcut
 autocmd BufWritePre * :Autoformat<CR>
@@ -186,13 +215,11 @@ command -nargs=0 -bar Update if &modified
 
 noremap <silent> <C-S>          :update<CR>
 vnoremap <silent> <C-S>         <C-C>:update<CR>
-inoremap <C-s> <Esc>:Update<CR>
+inoremap <C-s> <C-o>:Update<CR>
 let g:mark_multiple_trigger = "<F6>"
 
-behave mswin
-
 " map cut & paste to what they bloody should be
-set clipboard=unnamed
+
 " CTRL-X and SHIFT-Del are Cut
 " vnoremap <C-X> "+x
 " CTRL-C and CTRL-Insert are Copy
@@ -207,17 +234,7 @@ noremap <silent> <C-t>        :tabnew<CR>
 vnoremap <silent> <C-t>       <C-C>:tabnew<CR>
 inoremap <silent> <C-t>       <C-O>:tabnew<CR>
 
-" sane text files
-set fileformat=unix
-set encoding=utf-8
 
-" sane editing
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-
-" convert all typed tabs to spaces
-set expandtab
 
 "autocompletion with ctrlspace
 inoremap <c-space> <c-n>
@@ -235,7 +252,7 @@ let g:csexact_term_override="gnome"
 set t_Co=256
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 " Set the colorscheme
-colorscheme codeschool
+colorscheme base16-tomorrow-night
 " ----- lightline settings -------------------------------------------
 " Always show statusbar
 set laststatus=2
@@ -281,6 +298,7 @@ let g:NERDTreeWinSize=20
 " ----------NeoMake-----------------------------------------------------------
 autocmd! BufWritePost,BufEnter * Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_cpp_enabled_makers = ["gcc"]
 
 "-------CSS syntax
 autocmd BufWritePre,BufRead *.css highlight VendorPrefix ctermfg=red term=italic | match VendorPrefix /-\(moz\|webkit\|o\|ms\)-[a-zA-Z-]\+/
@@ -322,3 +340,11 @@ let g:UltiSnipsExpandTrigger="<C-j>"
 " let g:ycm_key_list_select_completion = []
 " let g:ycm_key_list_previous_completion=[]
 " let g:ycm_key_invoke_completion = '<tab>'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_goto_buffer_command = 'vertical-split'
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+"
+" ----Ctrl-P-----------
+let g:ctrlp_show_hidden = 1
+set autochdir
+

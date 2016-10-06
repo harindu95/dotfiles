@@ -4,6 +4,7 @@
 export TERM=xterm-256color
 alias nvimrc='nvim ~/.config/nvim/init.vim'
 alias vim='nvim'
+setxkbmap -option "caps:swapescape"
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -123,7 +124,6 @@ if ! shopt -oq posix; then
         . /etc/bash_completion
     fi
 fi
-export PATH=$HOME/bin:/usr/sbin:$PATH
+# export PATH=$HOME/bin:/usr/sbin:$PATH
 
-setxkbmap -option "caps:swapescape"
 
