@@ -4,8 +4,8 @@
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
- You should not put any user code in this function besides modifying the variable
- values."
+You should not put any user code in this function besides modifying the variable
+values."
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -26,9 +26,10 @@
      auto-completion
      better-defaults
      emacs-lisp
-     git
+     ;; git
      c-c++
      ycmd
+     python
      ;; markdown
      ;; org
      ;; (shell :variables
@@ -44,15 +45,18 @@
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      elpy
-                                      ycmd
                                       company-ycmd
                                       evil-leader
                                       evil-commentary
                                       multiple-cursors
+                                      base16-theme
+                                      emms
+                                      diff-hl
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+                                    yasnippet)
+
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'. (default t)
@@ -60,10 +64,10 @@
 
 (defun dotspacemacs/init ()
   "Initialization function.
- This function is called at the very startup of Spacemacs initialization
- before layers configuration.
- You should not put any user code in there besides modifying the variable
- values."
+This function is called at the very startup of Spacemacs initialization
+before layers configuration.
+You should not put any user code in there besides modifying the variable
+values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
@@ -78,7 +82,7 @@
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. (default t)
-   dotspacemacs-check-for-update t
+   dotspacemacs-check-for-update nil
    ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
@@ -105,7 +109,8 @@
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
+   dotspacemacs-themes '(base16-tomorrow-night
+                         spacemacs-dark
                          spacemacs-light
                          solarized-light
                          solarized-dark
@@ -120,7 +125,7 @@
                                :size 16
                                :weight regular
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.0)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;;dotspacemacs-leader-key ","
@@ -166,7 +171,7 @@
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
    ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
-   dotspacemacs-use-ido nil
+   dotspacemacs-use-ido t
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
    dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
@@ -189,7 +194,7 @@
    ;; If non nil a progress bar is displayed when spacemacs is loading. This
    ;; may increase the boot time on some systems and emacs builds, set it to
    ;; nil to boost the loading time. (default t)
-   dotspacemacs-loading-progress-bar t
+   dotspacemacs-loading-progress-bar nil
    ;; If non nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
    dotspacemacs-fullscreen-at-startup nil
@@ -207,9 +212,9 @@
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 75
    ;; If non nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
    ;; If non nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters the
    ;; point when it reaches the top or bottom of the screen. (default t)
@@ -246,21 +251,74 @@
 
 (defun dotspacemacs/user-init ()
   "Initialization function for user code.
- It is called immediately after `dotspacemacs/init', before layer configuration
- executes.
- This function is mostly useful for variables that need to be set
- before packages are loaded. If you are unsure, you should try in setting them in
- `dotspacemacs/user-config' first."
+It is called immediately after `dotspacemacs/init', before layer configuration
+executes.
+This function is mostly useful for variables that need to be set
+before packages are loaded. If you are unsure, you should try in setting them in
+`dotspacemacs/user-config' first."
+
+
   )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
- This function is called at the very end of Spacemacs initialization after
- layers configuration.
- This is the place where most of your configurations should be done. Unless it is
- explicitly specified that a variable should be set before a package is loaded,
- you should place your code here."
+This function is called at the very end of Spacemacs initialization after
+layers configuration.
+This is the place where most of your configurations should be done. Unless it is
+explicitly specified that a variable should be set before a package is loaded,
+you should place your code here."
 
+  (setq tabbar-ruler-global-tabbar t)    ; get tabbar
+  (setq tabbar-ruler-global-ruler t)     ; get global ruler
+  (setq tabbar-ruler-popup-menu t)       ; get popup menu.
+  (setq tabbar-ruler-popup-toolbar t)    ; get popup toolbar
+  (setq tabbar-ruler-popup-scrollbar t)  ; show scroll-bar on mouse-move
+
+  ;;Setting emms-music player
+  (emms-standard)
+  (emms-all)
+  (emms-default-players)
+  (setq exec-path (append exec-path '("/usr/local/bin")))
+  (emms-mode-line 1)
+  (emms-toggle-random-playlist)
+  (emms-toggle-repeat-playlist)
+  (add-hook 'kill-emacs-hook 'emms-stop)
+
+  (defun play-music()
+    (interactive)
+    (defvar cur-buffer)
+    (setq cur-buffer (current-buffer))
+    (if (or (null emms-playlist-buffer)
+            (not (buffer-live-p emms-playlist-buffer)))
+        (emms-add-file "/home/harindu/Downloads/"))
+    (emms-playlist-mode-go)
+    (emms-add-playlist "/home/harindu/playlist.m3u")
+    (emms-start)
+
+    (switch-to-buffer cur-buffer)
+    )
+
+  ;;Override default function to avoid repeating the same track
+  (defun emms-next ()
+    "Start playing the next track in the EMMS playlist."
+
+    (interactive)
+    (defvar current-track)
+    (when emms-player-playing-p
+      (setq current-track (emms-playlist-current-selected-track))
+      (emms-stop))
+    (when (eq 'current-track (emms-playlist-current-select-next))
+      )
+    (emms-start))
+
+  ;;Override defualt emms-mode-line to show only file name
+  (defun emms-mode-line-playlist-current ()
+    "Format the currently playing song."
+    (format emms-mode-line-format (file-name-nondirectory(emms-track-description
+                                                          (emms-playlist-current-selected-track)))))
+
+
+  ;;(global-set-key (kbd "SPC p m") 'play-music)
   (setq c-default-style "java")
   (setq-default indent-tabs-mode nil)
   (setq-default standard-indent 4)
@@ -270,22 +328,24 @@
   (setq-default tab-always-indent nil)
   (setq-default evil-shift-width 4)
 
-  ;;Configuring flycheck
+
+  ;; Configuring flycheck
   (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
   (add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
 
   ;; Adding python elpy
-  (add-hook 'python-mode-hook 'jedi:setup)
-  (elpy-enable)
+  ;; (add-hook 'python-mode-hook 'jedi:setup)
+  ;; (elpy-enable)
 
-  ;; Enabling ycmd
+  ;; ;; Enabling ycmd
   (set-variable 'ycmd-server-command '("python" "/home/harindu/ycmd/ycmd/"))
   (set-variable 'ycmd-global-config "/home/harindu/.ycm_extra_conf.py")
-  (global-ycmd-mode 1)
+  ;; (global-ycmd-mode 1)
   (setq ycmd-force-semantic-completion t)
-
+  (add-hook 'after-init-hook #'global-ycmd-mode)
 
   ;; Enabling company mode
+  (add-hook 'prog-mode-hook 'company-mode)
   (global-company-mode 1)
 
   ;; Enable CUA
@@ -302,9 +362,11 @@
     (save-buffer)
     )
 
-
   ;;Set Ctrl-S to save
   (global-set-key (kbd "C-s") 'save-and-indent)
+
+  ;;Set <f5> to go to evil-normal state
+  (global-set-key (kbd "<f5>") 'evil-normal-state)
 
   ;;Set Ctrl-A to select all
   (global-set-key (kbd "C-a") 'mark-whole-buffer)
@@ -321,6 +383,7 @@
   (define-key evil-visual-state-map "\C-v" nil)
   (global-set-key (kbd "C-v") 'yank)
 
+
   ;;Set Ctrl-z to undo
   (define-key evil-normal-state-map "\C-z" nil)
   (define-key evil-motion-state-map "\C-z" nil)
@@ -330,6 +393,7 @@
 
   ;;-----Evil key bindings ------------
 
+
   ;;map ';' to ':' in normal mode
   (define-key evil-normal-state-map (kbd ";") 'evil-ex)
 
@@ -338,16 +402,26 @@
   (global-evil-leader-mode)
   (evil-leader/set-leader ",")
 
+  ;; esc quits
+  (global-set-key [escape] 'evil-exit-emacs-state)
+
+
+
+
+
 
 
   (evil-leader/set-key
     "w" 'evil-quit
     "q" 'evil-quit-all
     "s" 'save-buffer
-    "v" 'split-window-right
-    "h" 'split-window-below
+    "v" 'split-window-right-and-focus
+    "h" 'split-window-below-and-focus
     "r" 'evil-search-highlight-persist-remove-all
     "jd" 'ycmd-goto
+    "pm" 'play-music
+    "pn" 'emms-next
+    "ps" 'emms
     )
 
 
@@ -408,7 +482,9 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))))
+    ("3380a2766cf0590d50d6366c5a91e976bdc3c413df963a0ab9952314b4577299" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ '(emms-player-vlc-parameters (quote ("--intf=rc" "--no-video")))
+ '(evil-want-Y-yank-to-eol t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
